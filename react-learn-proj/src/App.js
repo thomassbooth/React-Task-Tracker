@@ -3,10 +3,13 @@ import Header from './components/Header.js';
 import React from 'react'
 import { useState } from 'react'
 import Tasks from './components/Tasks'
+import AddTask from './components/AddTask';
+
 
 
 const App = () => {
 
+  const [showAddTask, setShowAddTask] = useState(true);
   const [tasks, setTasks] = useState([
     {
       id:1,
@@ -27,7 +30,21 @@ const App = () => {
       reminder: false,
     }
   ])
-
+//add Task
+  const addTask = (task) => {
+    //get a list of all ids
+    const ids = tasks.map(task => {
+      return task.id
+    });
+    //get the highest id of them all
+    let max = Math.max(...ids);
+    //increment by one
+    max += 1;
+    const newTask = {max, ...task};
+    setTasks([...tasks, newTask]);
+    
+  }
+//Delete a task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
   }
@@ -42,7 +59,8 @@ const App = () => {
 
   return (
     <div className="container">
-      <Header />
+      <Header onAdd = {() => setShowAddTask(!showAddTask)} showAddTask = {showAddTask}/>
+      {showAddTask && <AddTask onAdd = {addTask} showAdd = {showAddTask}/>}
       {tasks.length > 0 ? (
         <Tasks tasks = {tasks} 
         onDelete = {deleteTask} 
