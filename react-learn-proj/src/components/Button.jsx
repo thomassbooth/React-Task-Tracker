@@ -7,7 +7,7 @@ const Button = ({onClick, text, color}) => {
         style = {{backgroundColor: color}} 
         className = "btn">
             {text}
-        </button>
+        </button    >
     )
 }
 
